@@ -52,7 +52,7 @@ public class GoFac : MonoBehaviour
     }
     IEnumerator FinishTest()
     {
-        getProcess processData = new getProcess { process = testProcess };
+        getProcess processData = new getProcess { process = testProcess, userId = PlayerPrefs.GetString("LoggedInUserId", "No user ID found") };
         string jsonData = JsonUtility.ToJson(processData);
 
         UnityWebRequest hs_get = UnityWebRequest.Get(apiBaseUrl + "OBJexplain");
@@ -75,6 +75,8 @@ public class GoFac : MonoBehaviour
     private class getProcess
     {
         public string process;
+
+        public string userId;
     }
 }
 

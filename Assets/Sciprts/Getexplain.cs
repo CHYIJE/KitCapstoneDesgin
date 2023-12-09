@@ -35,9 +35,6 @@ public class Getexplain : MonoBehaviour
         postProgress = shareInt.userProgressInt;
         test = postProgress * 100 / explainList.Count;
         StartCoroutine(Postprogress(test));
-        // postProgress++;
-        Debug.Log("5:"+postProgress);
-        Debug.Log("6:"+shareInt.userProgressInt);
 
         myButton.interactable = false;
     }
