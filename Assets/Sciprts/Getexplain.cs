@@ -13,7 +13,8 @@ public class Getexplain : MonoBehaviour
     public string selectprocess = "믹싱공정"; // 원하는 값을 가져올때 필요.
     public string postProcess = "progress_one"; // 보낼때 필요한 값 믹싱일때 one, 코팅 two, 압연 three, 슬러팅 four
     public int explainnum = 0; // 문제 번호
-    public int postProgress = 1; // 문제별 진행도 할당
+    // public int postProgress = 1; // 문제별 진행도 할당
+    private int postProgress; // 문제별 진행도 할당
 
     private int test = 0; // 진행도 백분률
 
@@ -23,14 +24,20 @@ public class Getexplain : MonoBehaviour
     {
         string loggedInUserId = PlayerPrefs.GetString("LoggedInUserId", "No user ID found");
         StartCoroutine(Getobjexplain());
+         shareInt.userProgressInt = 0;
+        
     }
 
    public void ProgressUpBtn()
     {
         objexplaintext.text = explainList[explainnum].Explain;
+        shareInt.userProgressInt++;
+        postProgress = shareInt.userProgressInt;
         test = postProgress * 100 / explainList.Count;
         StartCoroutine(Postprogress(test));
-        postProgress++;
+        // postProgress++;
+        Debug.Log("5:"+postProgress);
+        Debug.Log("6:"+shareInt.userProgressInt);
 
         myButton.interactable = false;
     }
@@ -55,6 +62,7 @@ public class Getexplain : MonoBehaviour
             explainList = JsonUtility.FromJson<ExplainList>("{\"explains\":" + dataText + "}").explains;
 
             Debug.Log("ExplainList흐에에 : " + explainList[0].Explain);
+            
         }
         else
         {
@@ -64,7 +72,7 @@ public class Getexplain : MonoBehaviour
 
     IEnumerator Postprogress(int postProgress)
     {
-        Debug.Log("아니씨발이게왜 0이나와?" + explainList.Count);
+        Debug.Log("아니 이게왜 0이나와?" + explainList.Count);
         PlayerProgress userProgressData = new PlayerProgress
         {
             userId = PlayerPrefs.GetString("LoggedInUserId", "No user ID found"),

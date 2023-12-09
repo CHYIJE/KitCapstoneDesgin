@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class shareInt : MonoBehaviour
 {
-    public int userProgressInt = 0;
+    public static int userProgressInt;
     void Start()
     {
-        
+        userProgressInt = 0;
     }
 
     // Update is called once per frame
