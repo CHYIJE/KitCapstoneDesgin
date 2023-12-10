@@ -530,7 +530,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "\uC67C\uCABD \uCEE8\uD2B8\uB864\uB7EC \uC2A4\uD2F1\uC73C\uB85C '\uC774\uB3D9',
     \uC624\uB978\uCABD \uCEE8\uD2B8\uB864\uB7EC\uB85C '\uC2DC\uC57C'\uB97C \uC870\uC815
-    \uD560 \uC218 \uC788\uC73C\uBA70,\n"
+    \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.\n"
 --- !u!222 &167862113
 CanvasRenderer:
   m_ObjectHideFlags: 0

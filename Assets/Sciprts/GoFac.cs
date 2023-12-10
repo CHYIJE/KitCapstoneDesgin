@@ -8,7 +8,9 @@ using UnityEngine.SceneManagement;
 public class GoFac : MonoBehaviour
 {
     private string apiBaseUrl = "http://kitcomputer.kr:5200/unity/";
-    public string testProcess = "progress_one"; // 보낼때 필요한 값 믹싱일때 one, 코팅 two, 압연 three, 슬러팅 four
+    public string Process = "믹싱공정"; // 보낼때 필요한 값 믹싱일때 one, 코팅 two, 압연 three, 슬러팅 four
+    public string Process_score = "process_score_one";
+
     public void GoFac1()
     {
         SceneManager.LoadScene("Fac1Edu");
@@ -52,7 +54,7 @@ public class GoFac : MonoBehaviour
     }
     IEnumerator FinishTest()
     {
-        getProcess processData = new getProcess { process = testProcess, userId = PlayerPrefs.GetString("LoggedInUserId", "No user ID found") };
+        getProcess processData = new getProcess { process = Process, userId = PlayerPrefs.GetString("LoggedInUserId", "No user ID found"), processNum = Process_score };
         string jsonData = JsonUtility.ToJson(processData);
 
         UnityWebRequest hs_get = UnityWebRequest.Get(apiBaseUrl + "OBJexplain");
@@ -77,6 +79,7 @@ public class GoFac : MonoBehaviour
         public string process;
 
         public string userId;
+        public string processNum;
     }
 }
 
