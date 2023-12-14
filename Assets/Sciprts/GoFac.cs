@@ -11,6 +11,7 @@ public class GoFac : MonoBehaviour
     public string Process = "믹싱공정"; // 보낼때 필요한 값 믹싱일때 one, 코팅 two, 압연 three, 슬러팅 four
     public string Process_score = "process_score_one";
 
+
     public void GoFac1()
     {
         SceneManager.LoadScene("Fac1Edu");
@@ -57,7 +58,9 @@ public class GoFac : MonoBehaviour
         getProcess processData = new getProcess { process = Process, userId = PlayerPrefs.GetString("LoggedInUserId", "No user ID found"), processNum = Process_score };
         string jsonData = JsonUtility.ToJson(processData);
 
-        UnityWebRequest hs_get = UnityWebRequest.Get(apiBaseUrl + "OBJexplain");
+        Debug.Log("실행 되는가 : "+jsonData);
+
+        UnityWebRequest hs_get = UnityWebRequest.Get(apiBaseUrl + "testFinish");
         hs_get.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(jsonData));
         hs_get.downloadHandler = new DownloadHandlerBuffer();
         hs_get.SetRequestHeader("Content-Type", "application/json");
@@ -77,7 +80,6 @@ public class GoFac : MonoBehaviour
     private class getProcess
     {
         public string process;
-
         public string userId;
         public string processNum;
     }

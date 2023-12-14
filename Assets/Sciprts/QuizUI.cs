@@ -15,9 +15,10 @@ public class QuizUI : MonoBehaviour
     public Text objquiztext;
     public Button oBtn;
     public Button xBtn;
+    private int test;
     
     List<QuizData> quizList = new List<QuizData>();
-    public string userAnswer = "";
+    public bool userAnswer;
     public GameObject uiPanel; // 문제 제출후 UI를 삭제하기 위해 필요
     
     void Start()
@@ -30,14 +31,14 @@ public class QuizUI : MonoBehaviour
     
     public void Obtn()
     {
-        userAnswer = "1";
+        userAnswer = true;
         oBtn.interactable = false;
         xBtn.interactable = true;
     }
 
     public void Xbt()
     {
-        userAnswer = "0";
+        userAnswer = false;
         oBtn.interactable = true;
         xBtn.interactable = false;
     }
@@ -83,9 +84,12 @@ public class QuizUI : MonoBehaviour
         if (hs_get.result == UnityWebRequest.Result.Success)
         {
             string dataText = hs_get.downloadHandler.text;
+            Debug.Log("전체 데이터" + dataText);
             
             quizList = JsonUtility.FromJson<QuizList>("{\"quizzes\":" + dataText + "}").quizzes;
             objquiztext.text = quizList[quiznum].quiz;
+            Debug.Log("문제 인덱스 " + quizList[quiznum].idx);
+            test = quizList[quiznum].idx;
 
         }
         // 요청이 실패했을 경우
@@ -100,9 +104,10 @@ public class QuizUI : MonoBehaviour
     IEnumerator Postanswer()
     {
         string loggedInUserId = PlayerPrefs.GetString("LoggedInUserId", "No user ID found");
-        Player answerData = new Player { userId = loggedInUserId, idx = quizList[quiznum].idx, quizYN = trueOrfalse() };
+        Player answerData = new Player { userId = loggedInUserId, idx = test, quizYN = trueOrfalse() };
 
         string jsonData = JsonUtility.ToJson(answerData);
+        Debug.Log("개섹스"+jsonData);
 
         UnityWebRequest answerRequest = UnityWebRequest.PostWwwForm(apiBaseUrl + "QuizPoint", "POST");
         answerRequest.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(jsonData));
@@ -131,9 +136,9 @@ public class QuizUI : MonoBehaviour
     [Serializable]
     public class QuizData
     {
-        public int idx;
         public string quiz;
-        public string quizYN;
+        public int idx;
+        public bool quizYN;
     }
     [Serializable]
     public class QuizList

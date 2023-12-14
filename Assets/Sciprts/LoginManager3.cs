@@ -14,8 +14,6 @@ public class LoginManager3 : MonoBehaviour
     public Text loginResultText;
 
 
-    // private string idInput = "qwer1234"; // idInput을 멤버 변수로 선언
-
     public void LoginBtn()
     {
         StartCoroutine(Login(usernameInput.text, passwordInput.text));
@@ -23,13 +21,11 @@ public class LoginManager3 : MonoBehaviour
 
     void Start()
     {
-        // StartCoroutine(Login(usernameInput.text, passwordInput.text));
+        
     }
 
     IEnumerator Login(string idInput, string pwInput)
     {
-        // string pwInput = "12341234";
-
         LoginData loginData = new LoginData { userId = idInput, userPassword = pwInput };
         string jsonData = JsonUtility.ToJson(loginData);
 
@@ -50,15 +46,16 @@ public class LoginManager3 : MonoBehaviour
             PlayerPrefs.SetString("LoggedInUserId", idInput); // 클라이언트에서 사용하는 userId를 저장
             PlayerPrefs.Save();
 
-            Debug.Log("Login successful!");
             string savedSessionToken = PlayerPrefs.GetString("AuthToken", "No session token found");
             string loggedInUserId = PlayerPrefs.GetString("LoggedInUserId", "No user ID found");
 
-            Debug.Log("Saved Session Token: " + savedSessionToken);
-            Debug.Log("Logged In UiMapUser ID: " + loggedInUserId);
-
-            // 로그인이 성공하면 Fac1Map 씬으로 이동
-            SceneManager.LoadScene("UIMap");
+            if(response.isLogin == "True")
+            {
+                SceneManager.LoadScene("UIMap");
+            } else
+            {
+                loginResultText.text = "Login failed: " + response.isLogin;
+            }
         }
         else
         {
